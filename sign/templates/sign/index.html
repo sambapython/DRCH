@@ -1,0 +1,39 @@
+{% extends "sign/home.html"%}
+
+{% block content %}
+<div class="row">
+	<h1 style="color: blue"> Showing Patient details of {{ showing }}</h1>
+	
+</div>
+<div class="row">
+	<h1>PATIENT VISITS</h1>
+	<a href="/visit_create">ADD VISIT</a>
+	<table id="visits" border=2>
+		<thead>
+			<tr>
+				<th>visited at</th>
+				<th>paied</th>
+				<th>Cause</th>
+				<th>Operations</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for row in data%}
+			<tr>
+				<td>{{ row.datetime }}</td>
+				<td>{{ row.payment }}</td>
+				<td>{{ row.cause }}</td>
+				<td><a href="/visit_update/{{row.id}}/">UPDATE</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		$(document).ready(function() {
+    $('#visits').DataTable();
+} );
+	</script>
+</div>
+
+
+{% endblock %}

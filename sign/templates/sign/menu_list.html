@@ -1,0 +1,39 @@
+{% extends "sign/home.html"%}
+
+{% block content %}
+<div class="row">
+	<h1>MENUS</h1>
+	<a href="/menu_create">ADD MENU</a>
+	<table id="menu" border=2>
+		<thead>
+			<tr>
+				<th>NAME</th>
+				<th>SUBMENUS</th>
+				<th>Operations</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for menu in data%}
+			<tr>
+				<td>{{ menu.name }}</td>
+				<td>
+					{% for sm in menu.submenus.all %}
+						{{ sm.name }},
+					{% endfor %}
+				</td>
+				<td><a href="/menu_update/{{menu.id}}/">UPDATE</a>
+					<!-- <a href="/menu_delete/{{menu.id}}/">delete</a> -->
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		$(document).ready(function() {
+    $('#menu').DataTable();
+} );
+	</script>
+</div>
+
+
+{% endblock %}

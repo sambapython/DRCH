@@ -1,0 +1,40 @@
+{% extends "sign/home.html"%}
+
+{% block content %}
+<div class="row">
+	<h1>ROLE</h1>
+	<a href="/role_create">ADD ROLE</a>
+	<table id="menu" border=2>
+		<thead>
+			<tr>
+				<th>NAME</th>
+				<th>MENUS</th>s
+				<th>Operations</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for role in data%}
+			<tr>
+				<td>{{ role.name }}</td>
+				<td>
+					{% for m in role.menus.all %}
+						{{ m.name }},
+					{% endfor %}
+				</td>
+				<td><a href="/role_update/{{role.id}}/">UPDATE</a>
+					<!-- <a href="/role_delete/{{role.id}}/">delete</a> -->
+
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		$(document).ready(function() {
+    $('#menu').DataTable();
+} );
+	</script>
+</div>
+
+
+{% endblock %}

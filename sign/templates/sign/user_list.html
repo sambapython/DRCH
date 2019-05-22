@@ -1,0 +1,35 @@
+{% extends "sign/home.html"%}
+
+{% block content %}
+<div class="row">
+	<h1>USERS</h1>
+	<a href="/user_create">ADD USER</a>
+	<table id="menu" border=2>
+		<thead>
+			<tr>
+				<th>username</th>
+				<th>role</th>
+				<th>Operations</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in data%}
+			<tr>
+				<td>{{ user.username }}</td>
+				<td>{{ user.role.name }}</td>
+				<td><a href="/user_update/{{user.id}}/">UPDATE</a>
+					<!-- <a href="/user_delete/{{user.id}}/">delete</a> -->
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		$(document).ready(function() {
+    $('#menu').DataTable();
+} );
+	</script>
+</div>
+
+
+{% endblock %}

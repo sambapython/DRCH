@@ -1,0 +1,37 @@
+{% extends "sign/home.html"%}
+
+{% block content %}
+<div class="row">
+	<h1>claimS</h1>
+	<a href="/claim_create">ADD CLAIM</a>
+	<table id="claim" border=2>
+		<thead>
+			<tr>
+				<th>AMOUNT</th>
+				<th>DESCRIPTION</th>
+				<th>PATIENT</th>
+				<th>OPERATION</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for claim  in data%}
+			<tr>
+				<td>{{ claim.amount }}</td>
+				<td>{{ claim.description }}</td>
+				<td><a href="/patient_details/{{claim.user.id}}">{{ claim.user.username}}</a></td>
+				<td><a href="/claim_update/{{claim.id}}/">UPDATE</a>
+					<!-- <a href="/claim_delete/{{claim.id}}/">delete</a> -->
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		$(document).ready(function() {
+    $('#claim').DataTable();
+} );
+	</script>
+</div>
+
+
+{% endblock %}

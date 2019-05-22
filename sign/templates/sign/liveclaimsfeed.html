@@ -1,0 +1,17 @@
+{% extends "sign/home.html"%}
+
+{% block content %}
+<div class="row">
+	<h1>LIVE CLAIMS</h1>
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% ifequal request.user.role.name "admin"%}
+			<input type="file" name="file">
+			<input type="submit" name="submit" value="import">
+			{% else %}
+			<input type="submit" name="submit" value="export">
+			{% endifequal%}
+		</form>
+	
+</div>
+{% endblock %}

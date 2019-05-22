@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>DOCTOR HEALTH</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+ 
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="">DRHEALTH</a>
+      <a class="navbar-brand" href="">LOGO</a>
+    </div>
+    <ul class="nav navbar-nav">
+      {% if request.user.is_authenticated%}
+      <li><a href="/patient_details">PATIENT DETAILS</a></li>
+      {% if request.user.is_superuser %}
+          <li><a href="/menus">MENUS</a></li>
+          <li><a href="/submenus">SUB MENUS</a></li>
+          <li><a href="/roles">ROLES</a></li>
+          <li><a href="/users">USERS</a></li>
+      {% endif %}
+      {% for menu in request.user.role.menus.all %}
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ menu.name| upper}}
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          {% for sm in menu.submenus.all%}
+          <li><a href="{{ sm.url }}">{{ sm.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+          
+      {% endfor %}
+      <li><a href="/signout">SIGNOUT</a></li>
+      {% else %}
+      <!-- <li><a href="/signin">SIGNIN</a></li>
+      <li><a href="/signup">SIGNUP</a></li> -->
+      {% endif %}
+    </ul>
+    <form class="navbar-form navbar-left" action="/action_page.php">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search" name="search">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</nav>
+<div class="container login-container">
+  <div class="row">
+    <p>{{ message}}</p>
+  </div>
+  <div class="row">
+    {% block content%}
+      <div class="col-md-6 login-form-1">
+          <h3>Login Form</h3>
+          <form method="post">
+            {% csrf_token %}
+              <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Your Email *" value="" name="username"/>
+              </div>
+              <div class="form-group">
+                  <input type="password" class="form-control" placeholder="Your Password *" value="" name="password"/>
+              </div>
+              <div class="form-group">
+                  <input type="submit" class="btnSubmit" value="Login" name="login"/>
+              </div>
+              <div class="form-group">
+                  <a href="#" class="ForgetPwd">Forget Password?</a>
+              </div>
+          </form>
+      </div>
+      <div class="col-md-6 login-form-2">
+          <h3>REGISTRATION FORM</h3>
+          <form method="post">
+            {% csrf_token %}
+              <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Your Email *" value="" name="username"/>
+              </div>
+              <div class="form-group">
+                  <input type="password" class="form-control" placeholder="Your Password *" value="" name="password"/>
+              </div>
+              <div class="form-group">
+                  <input type="submit" class="btnSubmit" value="Register" name="reg" />
+              </div>
+              
+          </form>
+      </div>
+    {% endblock %}
+  </div>
+  
+</div>
+
+</body>
+</html>
+
